@@ -31,13 +31,13 @@ The Word template should expose a short style list and discourage direct formatt
 | `Title`, `Subtitle` | document front matter |
 | `Heading 1`–`Heading 4` | section hierarchy |
 | `Normal` | paragraph |
-| `OHD Provision 1`–`OHD Provision 4` | numbered provision levels |
-| `OHD Quotation` | long quotation |
-| `OHD Callout` | call-out block |
-| `OHD Side Note` | note anchored to the preceding marked text or paragraph |
-| `OHD Definition` | defined term and definition |
-| `OHD Citation` | citation record or citation-only paragraph |
-| `OHD Figure Caption` | caption associated with preceding figure |
+| `Better Text Provision 1`–`Better Text Provision 4` | numbered provision levels |
+| `Better Text Quotation` | long quotation |
+| `Better Text Callout` | call-out block |
+| `Better Text Side Note` | note anchored to the preceding marked text or paragraph |
+| `Better Text Definition` | defined term and definition |
+| `Better Text Citation` | citation record or citation-only paragraph |
+| `Better Text Figure Caption` | caption associated with preceding figure |
 
 Comments and tracked changes are editorial state, not carrier content. Import must refuse unresolved tracked changes by default and report comments rather than silently dropping them. Footnotes, endnotes, links, tables, and images use their native Word structures when they map cleanly.
 
