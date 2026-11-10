@@ -1,0 +1,28 @@
+name: Architecture or format decision
+description: Resolve a decision that will be recorded as an ADR or specification change.
+title: "Decision: "
+labels: ["type:decision", "status:needs-design"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options and trade-offs
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Decision criteria
+    validations:
+      required: true
+  - type: textarea
+    id: consequences
+    attributes:
+      label: Compatibility and migration consequences
+
