@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" data-ohd-version="0.1">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; script-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Example advice note</title>
+  <style>
+    :root { color-scheme: light; font-family: Georgia, 'Times New Roman', serif; color: #202124; background: #f3f1ed; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.58; }
+    .sheet { max-width: 78rem; margin: 2rem auto; padding: 5rem 7rem 6rem; background: #fff; box-shadow: 0 0.25rem 1.5rem #0002; }
+    main { max-width: 43rem; margin-inline: auto; }
+    h1 { font-size: 2.35rem; line-height: 1.08; margin: 0 0 0.4rem; }
+    h2 { margin-top: 2.6rem; line-height: 1.2; }
+    .deck { color: #5b6067; font-size: 1.15rem; margin-bottom: 2.8rem; }
+    .provision { position: relative; }
+    .provision > .number { position: absolute; right: calc(100% + 1rem); font-weight: 700; }
+    blockquote { margin: 1.5rem 0; padding: 0.5rem 1.25rem; border-left: 0.22rem solid #765b3b; color: #34312d; }
+    .callout { margin: 1.8rem 0; padding: 1rem 1.2rem; border: 1px solid #b8aa95; background: #f8f5ef; }
+    .sidenote { float: right; clear: right; width: 13rem; margin: 0 -17rem 1rem 2rem; padding-top: 0.35rem; border-top: 1px solid #8d7557; color: #57524a; font-size: 0.86rem; }
+    a { color: #5e4020; text-underline-offset: 0.15em; }
+    @media (max-width: 70rem) {
+      .sheet { margin: 0; padding: 3rem max(1.3rem, 7vw); }
+      .sidenote { float: none; width: auto; margin: 1rem 0 1.5rem; padding-left: 1rem; border-left: 0.22rem solid #8d7557; border-top: 0; }
+      .provision > .number { position: static; display: inline-block; min-width: 2rem; }
+    }
+    @page { size: A4; margin: 22mm 30mm 24mm 25mm; }
+    @media print {
+      :root { background: #fff; }
+      .sheet { max-width: none; margin: 0; padding: 0; box-shadow: none; }
+      main { max-width: none; }
+      h1, h2 { break-after: avoid; }
+      blockquote, .callout, figure { break-inside: avoid; }
+      .sidenote { float: right; width: 35mm; margin: 0 -42mm 3mm 7mm; font-size: 8.5pt; }
+      a { color: inherit; }
+    }
+  </style>
+  <script type="application/ld+json">
+    {"profile":"ohd","version":"0.1","title":"Example advice note","language":"en","status":"fixture"}
+  </script>
+</head>
+<body>
+  <article class="sheet">
+    <main>
+      <header>
+        <h1>Advice on the notice provision</h1>
+        <p class="deck">A small fixture demonstrating provisions, a long quotation, a call-out, and a side note in one offline file.</p>
+      </header>
+
+      <section id="summary">
+        <h2>Summary</h2>
+        <p>The notice should be served by both permitted methods. This preserves a clear evidential route while avoiding dependence on a disputed interpretation of the electronic-service clause.</p>
+        <aside class="callout" aria-label="Recommended action"><strong>Recommended action.</strong> Serve by recorded post and by the nominated email address before 16:00 on the final business day.</aside>
+      </section>
+
+      <section id="analysis">
+        <h2>Analysis</h2>
+        <p class="provision" id="p-1"><span class="number">1.</span>The agreement makes time material to service. The operative wording is therefore reproduced in full:</p>
+        <blockquote cite="#source-clause">
+          <p>Any notice must be in writing and delivered to the address stated in Schedule 1. A notice sent by electronic mail is received only when the receiving party acknowledges receipt, unless the parties have agreed another method in writing.</p>
+        </blockquote>
+        <aside class="sidenote" id="note-1"><strong>Context.</strong> In the full format this note would be linked to a precise text anchor and would fall inline when the side rail is unavailable.</aside>
+        <p class="provision" id="p-2"><span class="number">2.</span>The acknowledgement condition creates avoidable uncertainty. Dual service is proportionate because neither permitted route prejudices the recipient and the postal route supplies independent proof of dispatch.</p>
+      </section>
+
+      <section id="source-clause">
+        <h2>Source</h2>
+        <p><cite>Example Agreement, clause 14.2</cite>. Fictional text prepared solely as a conformance fixture.</p>
+      </section>
+    </main>
+  </article>
+</body>
+</html>
