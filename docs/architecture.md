@@ -51,7 +51,7 @@ The reference exporter drives a pinned browser version with print backgrounds en
 The v0 carrier is a UTF-8 `.html` file. A dedicated compound extension may be adopted after interoperability testing. The root element declares a profile marker and version:
 
 ```html
-<html lang="en" data-ohd-version="0.1">
+<html lang="en" data-better-text-version="0.1">
 ```
 
 The document includes a Content Security Policy meta tag that blocks network access and limits scripts and styles to embedded, build-generated content.
