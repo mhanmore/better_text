@@ -16,7 +16,7 @@ The output is ordinary HTML. It opens offline in a full browser, carries its own
 
 ## Authoring decision
 
-Markdown is the canonical editorial source for the first implementation. It produces reviewable diffs, is easy to validate, and maps predictably to the restrained component model. Word is supported as an ingestion route using a published set of custom styles (for example `OHD Provision`, `OHD Side Note`, and `OHD Callout`). Imports must produce the same normalized intermediate document model as Markdown.
+Markdown is the canonical editorial source for the first implementation. It produces reviewable diffs, is easy to validate, and maps predictably to the restrained component model. Word is supported as an ingestion route using a published set of custom styles (for example `Better Text Provision`, `Better Text Side Note`, and `Better Text Callout`). Imports must produce the same normalized intermediate document model as Markdown.
 
 See [ADR 0001](docs/adr/0001-authoring-source.md) for the decision and its review trigger.
 
