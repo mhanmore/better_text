@@ -2,9 +2,9 @@
 
 ## 1. Scope
 
-Better Text is a **carrier format**, not an editor and not a new browser engine. An authoring tool compiles a supported source into one constrained HTML file. A normal browser is the primary reader. The browser's print engine produces PDF or paper from the same semantic tree.
+Better Text is a **portable document carrier with optional embedded Markdown editing**, not a WYSIWYG editor and not a new browser engine. An authoring tool compiles a supported source into one constrained HTML file. A normal browser is the primary reader. The browser's print engine produces PDF or paper from the same semantic tree.
 
-The reference implementation should be usable as a command-line build tool first. Editors can integrate it later through the normalized document model and validation API.
+The reference implementation should be usable as a command-line build tool first. A full-editable export also includes a plain-text Markdown editor and a local rebuild/export path. The browser's print engine supplies interactive printing/PDF; a pinned browser is used separately for reproducible PDF builds.
 
 ## 2. Architectural principles
 
@@ -19,12 +19,20 @@ The reference implementation should be usable as a command-line build tool first
 
 ### Source adapters
 
-- **Markdown adapter (normative for v0):** Markdown plus a small directive syntax for document-specific structures.
+- **Markdown adapter (normative for v0):** CommonMark/GFM plus a constrained, versioned subset of MyST-compatible colon-fenced directives for document-specific structures. Markdown is the sole authoritative source in full-editable files; MDX/JSX execution is excluded.
 - **Word adapter (compatibility path):** `.docx` paragraphs and tables using approved custom styles. Direct formatting is treated as decoration, not semantics, and generates warnings when it cannot be represented safely.
 
 ### Normalized document model
 
 A typed, ordered tree independent of Markdown and Word. Nodes carry stable IDs, semantic roles, numbering information, source locations, and optional provenance. This model is the point at which linting, cross-reference resolution, and policy checks occur.
+
+### Three export modes
+
+1. **Read-only:** fully rendered semantic HTML, embedded screen/print CSS and minimal optional reader behaviour; readable and printable with scripts disabled. Does not contain Markdown authoring capability.
+2. **Read + PDF:** everything in read-only, plus a visible print/save-as-PDF interface implemented using native browser print. This is not a guarantee of pixel-identical PDFs on different browsers.
+3. **Full editable:** everything in read + PDF, plus embedded canonical Markdown, a lightweight syntax-aware plain-text editor, a vetted in-browser parser/transform subset and the ability to regenerate and download a complete standalone HTML file. No WYSIWYG editing.
+
+Export modes describe packaged capabilities, not separate document grammars. Each uses the same semantic model and substantive HTML. Read-only remains printable; the middle mode adds an explicit PDF workflow, not hidden content or a prohibition on printing.
 
 ### Renderer and packager
 
@@ -34,7 +42,8 @@ The renderer emits semantic HTML5. The packager embeds:
 - the minimal approved reader script;
 - compact fonts only when licensing and size policy permit;
 - images as data URLs or embedded SVG;
-- a JSON metadata block containing format version, build provenance, language, title, and integrity information.
+- a JSON metadata block containing format version, build provenance, language, title, export mode, and integrity information;
+- in full-editable mode only, an inert, safely encoded Markdown source payload and the approved editor/parser bundle.
 
 The packager fails on external URLs in resource-bearing attributes unless they are ordinary user-followed hyperlinks and the chosen profile permits them.
 
@@ -42,9 +51,13 @@ The packager fails on external URLs in resource-bearing attributes unless they a
 
 Reader JavaScript may add affordances such as collapsing a long quotation, opening an explanatory popover, copying a citation, or navigating cross-references. It must not fetch content, rewrite substantive text, or make any content inaccessible to print or no-script readers.
 
+### Reusable building blocks
+
+Investigate modular MyST packages for syntax parsing, directives, AST/schema and transformations rather than adopting the full MyST publisher. Evaluate CodeMirror 6 as the optional Markdown text editor. Check dependency compatibility, transitive size, CSP and `file://` browser behaviour, source-to-render fidelity, licence notices and offline operation before making either mandatory. Build Better Text-specific layouts, print policy, packaging and profile validation locally; see [reuse and bundling](reuse-and-bundling.md).
+
 ### PDF exporter
 
-The reference exporter drives a pinned browser version with print backgrounds enabled, fixed page geometry, and an explicit print stylesheet. It records the browser/template versions in build metadata. PDF validation checks page size, embedded fonts, link targets, bookmarks where supported, and extracted-text parity.
+The reproducible reference exporter (outside the portable HTML file) drives a pinned browser version with print backgrounds enabled, fixed page geometry, and an explicit print stylesheet. It records the browser/template versions in build metadata. PDF validation checks page size, embedded fonts, link targets, bookmarks where supported, and extracted-text parity.
 
 ## 4. File profile
 
@@ -63,6 +76,7 @@ The default profile prohibits:
 - external scripts, styles, fonts, media, frames, and form submissions;
 - arbitrary inline event handlers and author-provided executable code;
 - service workers, local storage, cookies, analytics, and network APIs;
+- evaluating Markdown directives as code or permitting JSX/MDX component execution.
 - automatic navigation or pop-ups.
 
 Generated script should be hashable and versioned. A stricter `no-script` profile should remain possible. Opening a file must not itself contact the network; following an ordinary cited hyperlink is an explicit reader action.
@@ -81,7 +95,8 @@ The likely implementation layout is:
 
 ```text
 packages/model       normalized document types and validation
-packages/markdown    Markdown adapter and directives
+packages/markdown    selected parser/directive integration and adapters
+packages/editor      optional Markdown editing and save/rebuild
 packages/docx        Word custom-style adapter
 packages/render      HTML renderer and asset packager
 packages/pdf         deterministic export and PDF checks
