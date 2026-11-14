@@ -2,7 +2,7 @@
 
 ## Decision
 
-Use Markdown as the canonical source for v0. Provide Word as a supported import environment through custom styles and a controlled conversion step.
+Use Markdown as the canonical source for v0: CommonMark/GFM plus a small versioned MyST-compatible directive subset. MDX and author-supplied executable components are out of scope. Provide Word as a supported import environment through custom styles and a controlled conversion step.
 
 This separates **authoring preference** from **document semantics**: authors may work in Word, but the repository stores normalized Markdown and/or the normalized model for review and repeatable builds.
 
@@ -18,7 +18,21 @@ document/
   references.yaml
 ```
 
-Standard Markdown covers headings, paragraphs, emphasis, lists, links, quotations, code where permitted, tables within the chosen dialect, and images. Versioned directives cover provisions, call-outs, side notes, citations, definitions, and other approved components.
+CommonMark/GFM covers headings, paragraphs, emphasis, lists, links, quotations, code where permitted, tables within the chosen dialect, and images. Versioned directives cover provisions, call-outs, side notes, citations, definitions, and other approved components.
+
+Full-editable HTML embeds the canonical Markdown as inert data, not as active script or editable rendered HTML. The optional CodeMirror editor modifies this Markdown and locally regenerates the semantic view; an export action produces a new complete `.html` file. The embedded Markdown and rendered document must be consistency-checked on export. The read-only and read + PDF modes may omit Markdown source.
+
+Use MyST-style colon fences for Better Text-specific directives, for example:
+
+```markdown
+:::{sidenote}
+:anchor: statutory-framework
+
+The relevant test is fact-sensitive.
+:::
+```
+
+The accepted directive names, arguments, nesting, escaping and syntax are specified by the Better Text profile: compatibility with all of MyST is neither assumed nor required.
 
 The build reports source line numbers for invalid nesting, unresolved references, duplicate IDs, inaccessible labels, oversized assets, and print risks.
 
