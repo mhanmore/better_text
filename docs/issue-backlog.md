@@ -2,6 +2,16 @@
 
 These are the copy-ready seed issues. Create milestones and labels from [`workflow.md`](workflow.md), then add these issues in order. Dependencies are deliberately explicit so the list can be transferred into GitHub Projects without reinterpretation.
 
+## New prerequisites and implementation issues
+
+The initial twelve issues remain useful but require these additions:
+
+- **M0 decision — Export profiles:** document and test `read-only`, `read-pdf` and `editable` contracts, including printable read-only fallback and iOS download/save limits. Depends on security policy.
+- **M0 research — Dependency spike:** compare selected MyST parser/directive/AST/transform packages with a lighter CommonMark/GFM parser; measure minified standalone HTML bytes, compatibility, licences, `file://` behaviour, CSP safety and browser performance. Evaluate CodeMirror 6 for optional Markdown text editing. Do not commit to a full MyST runtime without benchmarking.
+- **M1 implementation — Directive interoperability:** adopt a defined MyST-compatible colon-fence grammar, test nested directives and invalid inputs, and reject executable MDX/JSX constructs.
+- **M2 implementation — Editable export:** safely embed sole authoritative Markdown, edit with a syntax-aware text editor, regenerate semantic HTML without network access, validate content parity, and download a new self-contained `.html` file. Include mobile browser tests.
+- **M1/M2 test — Cross-profile parity:** check substantive content, print behaviour, offline operation, asset completeness and manifest metadata in all three modes.
+
 ## 1. Confirm the Better Text profile identifier and file extension
 
 **Labels:** `type:decision`, `area:format`, `priority:p0`  
