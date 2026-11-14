@@ -9,7 +9,7 @@ The project needs a primary authoring representation that is reviewable, determi
 
 ## Decision
 
-Markdown plus versioned document directives is the canonical source for the v0 reference workflow. Word documents using a published custom-style template are accepted through an importer that emits the same normalized document model. Word is not the canonical repository representation.
+Markdown (CommonMark/GFM plus a constrained MyST-compatible directive vocabulary) is the canonical source for the v0 reference workflow. In the optional editable HTML profile, this Markdown is safely embedded as the authoritative source; the rendered HTML is its derived view. The editor operates on Markdown text, not WYSIWYG HTML. Word documents using a published custom-style template are accepted through an importer that emits the same normalized document model. Word is not the canonical repository representation.
 
 ## Consequences
 
