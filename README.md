@@ -1,11 +1,12 @@
 # Better Text
 
-Better Text is a proposed single-file, self-contained reading format for serious prose: contracts, legislation, reports, advice, and other documents that need a better screen-reading experience without sacrificing dependable printing and PDF export.
+Better Text is a proposed single-file, self-contained reading and optional editing format for serious prose: contracts, legislation, reports, advice, and other documents that need a better screen-reading experience without sacrificing dependable printing and PDF export.
 
 The output is ordinary HTML. It opens offline in a full browser, carries its own presentation and optional behaviour, and is designed to remain useful when scripts are unavailable. The format keeps its component set intentionally small so every document can be rendered as familiar printed prose.
 
 ## Design commitments
 
+- **Three export modes.** Read-only, read + PDF, and fully editable all use the same semantic rendered document; higher modes add capabilities without changing the content model.
 - **One portable file.** CSS, approved scripts, fonts, and small media assets are embedded; no network access is required.
 - **Print is a first-class rendering target.** A generated PDF must preserve all substantive content, hierarchy, numbering, citations, notes, and cross-references.
 - **Progressive enhancement.** The document remains readable and printable when JavaScript is disabled.
@@ -16,9 +17,13 @@ The output is ordinary HTML. It opens offline in a full browser, carries its own
 
 ## Authoring decision
 
-Markdown is the canonical editorial source for the first implementation. It produces reviewable diffs, is easy to validate, and maps predictably to the restrained component model. Word is supported as an ingestion route using a published set of custom styles (for example `Better Text Provision`, `Better Text Side Note`, and `Better Text Callout`). Imports must produce the same normalized intermediate document model as Markdown.
+Markdown is the canonical editorial source for the first implementation. The proposed syntax is CommonMark/GFM plus a restricted MyST-compatible directive profile (not MDX/JSX). In full-editable exports, the embedded Markdown is authoritative and the HTML is its generated view. It produces reviewable diffs, is easy to validate, and maps predictably to the restrained component model. Word is supported as an ingestion route using a published set of custom styles (for example `Better Text Provision`, `Better Text Side Note`, and `Better Text Callout`). Imports must produce the same normalized intermediate document model as Markdown.
 
 See [ADR 0001](docs/adr/0001-authoring-source.md) for the decision and its review trigger.
+
+## Reuse-first implementation
+
+Evaluate selected MyST packages for parsing, directives, structured document modelling, citations and cross-reference transforms, and CodeMirror 6 for plain-text Markdown editing. Do not assume the complete MyST publishing runtime belongs in each HTML file: benchmark a tree-shaken, offline bundle, security posture and output fidelity before selecting dependencies. Better Text retains its own reader design, print theme, single-file packaging and export-profile system. See [reuse assessment](docs/reuse-and-bundling.md).
 
 ## Proposed pipeline
 
@@ -26,13 +31,15 @@ See [ADR 0001](docs/adr/0001-authoring-source.md) for the decision and its revie
 Markdown ──────┐
                ├─> normalized document model ─> validated single HTML file
 Word styles ───┘                                  ├─> browser reading view
-                                                  └─> print stylesheet ─> PDF
+                                                  ├─> native print/PDF
+                                                  └─> optional embedded Markdown + editor
 ```
 
 The browser rendering and PDF export consume the same semantic HTML. PDF is not a second content representation.
 
 ## Repository map
 
+- [`docs/reuse-and-bundling.md`](docs/reuse-and-bundling.md) — dependency candidates, three export modes, size targets, and proof-of-concept tests
 - [`docs/architecture.md`](docs/architecture.md) — system boundaries, build pipeline, safety, and versioning
 - [`docs/format-spec.md`](docs/format-spec.md) — initial document profile and semantic component palette
 - [`docs/print-and-pdf.md`](docs/print-and-pdf.md) — print contract and fidelity acceptance criteria
