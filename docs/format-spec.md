@@ -44,16 +44,30 @@ Recommended metadata:
 - Popovers do not trap focus, obscure their trigger, or require pointer precision.
 - Internal references work as ordinary anchors without JavaScript.
 
+## Export capability profiles
+
+- `read-only`: semantic content, styles and minimal approved viewer functionality; remains natively printable.
+- `read-pdf`: `read-only` plus an explicit native browser print/save-as-PDF interface.
+- `editable`: `read-pdf` plus safely embedded canonical Markdown, text editing, local rendering and standalone HTML re-export.
+
+All profiles preserve visible substantive HTML independently of JavaScript and share the same metadata and semantic vocabulary. Editing cannot depend on remote resources; the package contains no arbitrary author-executable components.
+
 ## Authoring directives
 
-The Markdown adapter may use a compact directive syntax for components Markdown cannot express semantically. A provisional example:
+The Markdown adapter uses a small, versioned subset of MyST-style colon-fenced directives for components Markdown cannot express semantically. A provisional example:
 
 ```markdown
-:::sidenote{anchor="#reasonableness" label="Context"}
+:::{sidenote}
+:anchor: reasonableness
+:label: Context
+
 This test was reformulated in the 2024 amendment.
 :::
 
-:::quotation{source="Act, s 12" collapse-after="8"}
+:::{quotation}
+:source: Act, s 12
+:collapse-after: 8
+
 Full quoted text…
 :::
 ```
