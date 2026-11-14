@@ -1,5 +1,7 @@
 # Print and PDF Contract
 
+Native browser print/save-as-PDF is available in the `read-pdf` and `editable` modes; `read-only` still remains printable by normal browser facilities. These exports cannot promise identical pagination across browsers. A separate build-time reference exporter uses pinned Chromium for reproducible PDFs and validation. Neither path bundles a general-purpose JavaScript PDF drawing engine by default.
+
 PDF export is a primary product output, not a screenshot of the reading view. The aim is faithful reproduction of content and structure in a conventional page layout, with enough white space for annotation.
 
 ## Default page design
